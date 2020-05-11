@@ -1,7 +1,9 @@
 ---
 title: "Improved Next.js and Gatsby page load performance with granular chunking"
-category: "Development"
 description: "Praesent tristique risus luctus hendrerit egestas."
+date: "2015-05-01T22:12:03.284Z"
+collection: "Development"
+category: "Development"
 tagBg: "#e4f1fe"
 tagColour: "#5d99e2"
 ---

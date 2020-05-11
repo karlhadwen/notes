@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Box, Checkbox, Flex, Tag, Text } from '@chakra-ui/core';
 import { Overlay } from './overlay';
 
-export function Note({ data }) {
+export function Note({ data: { attributes, body } }) {
   const [showContent, setShowContent] = useState(false);
 
   return (
@@ -18,17 +18,20 @@ export function Note({ data }) {
         <Flex alignItems="center">
           <Checkbox marginRight="15px" />
           <Text cursor="pointer" onClick={() => setShowContent(!showContent)}>
-            {data.attributes?.title}
+            {attributes.title}
           </Text>
         </Flex>
-        <Tag
-          backgroundColor={data.attributes?.tagBg}
-          color={data.attributes?.tagColour}
-        >
-          {data.attributes?.category}
+        <Tag backgroundColor={attributes.tagBg} color={attributes.tagColour}>
+          {attributes.category}
         </Tag>
       </Flex>
-      {showContent && <Overlay data={data} setShowContent={setShowContent} />}
+      {showContent && (
+        <Overlay
+          attributes={attributes}
+          body={body}
+          setShowContent={setShowContent}
+        />
+      )}
     </Box>
   );
 }

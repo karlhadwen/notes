@@ -2,6 +2,7 @@
 title: "Channel4 Operations Guide"
 description: "Praesent tristique risus luctus hendrerit egestas."
 date: "2015-05-01T22:12:03.284Z"
+collection: "Core"
 category: "All4 +"
 tagBg: "#e5f6de"
 tagColour: "#66a838"

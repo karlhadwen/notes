@@ -15,10 +15,10 @@ export const closeButtonPsuedoElements = (direction) => ({
   background: '#333',
 });
 
-export function Overlay({ data, setShowContent }) {
+export function Overlay({ attributes, body, setShowContent }) {
   return ReactDOM.createPortal(
     <Flex>
-      <Helmet title={data.attributes?.title} />
+      <Helmet title={attributes?.title} />
       <Box
         background="white"
         position="fixed"
@@ -32,22 +32,18 @@ export function Overlay({ data, setShowContent }) {
         <Box marginBottom="10px">
           <Flex alignItems="center">
             <Text fontSize="2xl" fontWeight="bold">
-              {data.attributes?.title}
+              {attributes?.title}
             </Text>
             <Tag
-              backgroundColor={data.attributes?.tagBg}
-              color={data.attributes?.tagColour}
+              backgroundColor={attributes?.tagBg}
+              color={attributes?.tagColour}
               marginLeft="10px"
             >
-              {data.attributes?.category}
+              {attributes?.category}
             </Tag>
           </Flex>
         </Box>
-        <ReactMarkdown
-          escapeHtml={false}
-          source={data.body}
-          marginBottom="20px"
-        />
+        <ReactMarkdown escapeHtml={false} source={body} marginBottom="20px" />
         <Button
           onClick={() => setShowContent(false)}
           position="absolute"

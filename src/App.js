@@ -3,29 +3,54 @@ import { CSSReset, ThemeProvider, Button, Icon, Box } from '@chakra-ui/core';
 import fm from 'front-matter';
 import customTheme from './theme';
 import { NotesContainer } from './containers/notes';
-import { markdownFiles } from './utils/getNotes';
+
+const importAll = (r) => r.keys().map(r);
+export const markdownFiles = importAll(
+  require.context('../notes', true, /\.md$/)
+)
+  .sort()
+  .reverse();
+
+function groupBy(objectArray, property) {
+  return objectArray.reduce(function (acc, obj) {
+    const key = obj[property].collection;
+    if (!acc[key]) {
+      acc[key] = [];
+    }
+    acc[key].push(obj);
+    return acc;
+  }, []);
+}
 
 export default function App() {
-  const [notes, setNotes] = useState([]);
+  const [collections, setCollections] = useState([]);
 
   useEffect(() => {
-    async function getNotes() {
+    async function getNotesAndStoreInCollection() {
       const fetchedNotes = await Promise.all(
         markdownFiles.map((file) => fetch(file).then((res) => res.text()))
       ).catch((err) => console.error(err));
 
-      setNotes(fetchedNotes.map((note) => fm(note)));
+      const mdNotes = fetchedNotes.map((note) => fm(note));
+      const userCollections = groupBy(mdNotes, 'attributes');
+
+      setCollections(userCollections);
     }
 
-    getNotes();
+    getNotesAndStoreInCollection();
   }, []);
 
   return (
     <ThemeProvider theme={customTheme}>
       <CSSReset />
       <Box height="100vh" padding="20px" width="100%" position="relative">
-        <NotesContainer title="Core" notes={notes} />
-        <NotesContainer title="Development" notes={notes} />
+        {Object.keys(collections).map((collection) => (
+          <NotesContainer
+            key={collection}
+            title={collection}
+            notes={collections[collection]}
+          />
+        ))}
 
         <Button
           border="0"

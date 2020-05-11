@@ -1,7 +1,9 @@
 ---
 title: "Architecture Overview"
-category: "Player Proxy"
 description: "Praesent tristique risus luctus hendrerit egestas."
+date: "2015-05-01T22:12:03.284Z"
+collection: "Core"
+category: "Player Proxy"
 tagBg: "#eff1f6"
 tagColour: "#70747d"
 ---
