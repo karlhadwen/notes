@@ -6,6 +6,16 @@
     "name": "Karl Hadwen",
     "email": "karlhadwen@gmail.com"
   },
+  "scripts": {
+    "start": "rescripts start",
+    "build": "rescripts build",
+    "test": "rescripts test",
+    "eject": "react-scripts eject",
+    "dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
+    "postinstall": "electron-builder install-app-deps",
+    "preelectron-pack": "yarn build",
+    "electron-pack": "build -mw"
+  },
   "build": {
     "appId": "com.my-website.my-app",
     "productName": "Smart Notes",
@@ -15,7 +25,8 @@
     },
     "files": [
       "build/**/*",
-      "node_modules/**/*"
+      "node_modules/**/*",
+      "lang-data"
     ],
     "directories": {
       "buildResources": "assets"
@@ -32,20 +43,12 @@
     "react-dom": "^16.13.1",
     "react-helmet": "^6.0.0",
     "react-markdown": "^4.3.1",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.1",
+    "shelljs": "^0.8.4",
+    "tesseract.js": "^2.1.1"
   },
   "homepage": "./",
   "main": "public/electron.js",
-  "scripts": {
-    "start": "rescripts start",
-    "build": "rescripts build",
-    "test": "rescripts test",
-    "eject": "react-scripts eject",
-    "dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
-    "postinstall": "electron-builder install-app-deps",
-    "preelectron-pack": "yarn build",
-    "electron-pack": "build -mw"
-  },
   "eslintConfig": {
     "extends": "react-app"
   },

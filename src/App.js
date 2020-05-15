@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { CSSReset, ThemeProvider, Button, Icon, Box } from '@chakra-ui/core';
 import fm from 'front-matter';
+import shell from 'shelljs';
+import { createWorker } from 'tesseract.js';
 import customTheme from './theme';
 import { NotesContainer } from './containers/notes';
 
@@ -24,6 +26,26 @@ function groupBy(objectArray, property) {
 
 export default function App() {
   const [collections, setCollections] = useState([]);
+
+  const worker = createWorker({
+    langPath: './lang-data',
+    logger: (m) => console.log(m),
+  });
+
+  async function takeScreenshot() {
+    shell.exec('/usr/sbin/screencapture -i note.png', async function () {
+      await worker.load();
+      await worker.loadLanguage('eng');
+      await worker.initialize('eng');
+      const {
+        data: { text },
+      } = await worker.recognize(
+        'https://tesseract.projectnaptha.com/img/eng_bw.png'
+      );
+      await worker.terminate();
+      console.log(text);
+    });
+  }
 
   useEffect(() => {
     async function getNotesAndStoreInCollection() {
@@ -57,6 +79,7 @@ export default function App() {
           backgroundColor="#1f2023"
           position="absolute"
           bottom="20px"
+          onClick={takeScreenshot}
         >
           <Icon name="add" color="white" />
         </Button>
