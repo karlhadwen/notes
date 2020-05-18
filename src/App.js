@@ -24,13 +24,16 @@ function groupBy(objectArray, property) {
   }, []);
 }
 
+const worker = createWorker({
+  cacheMethod: 'none',
+  langPath: `http://localhost:3000/static/vendor/lang-data/eng.traineddata`,
+  workerPath: `http://localhost:3000/static/vendor/worker.min.js`,
+  corePath: `http://localhost:3000/static/vendor/tesseract-core.wasm.js`,
+  logger: (m) => console.log(m),
+});
+
 export default function App() {
   const [collections, setCollections] = useState([]);
-
-  const worker = createWorker({
-    langPath: './lang-data',
-    logger: (m) => console.log(m),
-  });
 
   async function takeScreenshot() {
     shell.exec('/usr/sbin/screencapture -i note.png', async function () {
@@ -39,9 +42,7 @@ export default function App() {
       await worker.initialize('eng');
       const {
         data: { text },
-      } = await worker.recognize(
-        'https://tesseract.projectnaptha.com/img/eng_bw.png'
-      );
+      } = await worker.recognize('http://localhost:3000/note.png');
       await worker.terminate();
       console.log(text);
     });

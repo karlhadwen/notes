@@ -14,7 +14,7 @@
     "dev": "concurrently \"BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
     "postinstall": "electron-builder install-app-deps",
     "preelectron-pack": "yarn build",
-    "electron-pack": "build -mw"
+    "electron-pack": "electron-builder build -mw"
   },
   "build": {
     "appId": "com.my-website.my-app",
@@ -25,13 +25,23 @@
     },
     "files": [
       "build/**/*",
-      "node_modules/**/*",
-      "lang-data"
+      "node_modules/**/*"
     ],
     "directories": {
       "buildResources": "assets"
     }
   },
+    "homepage": "./",
+    "main": "public/electron.js",
+    "eslintConfig": {
+      "extends": "react-app"
+    },
+    "browserslist": [
+      ">0.2%",
+      "not dead",
+      "not ie <= 11",
+      "not op_mini all"
+    ],
   "dependencies": {
     "@chakra-ui/core": "^0.7.0",
     "@emotion/core": "^10.0.28",
@@ -45,20 +55,11 @@
     "react-markdown": "^4.3.1",
     "react-scripts": "3.4.1",
     "shelljs": "^0.8.4",
-    "tesseract.js": "^2.1.1"
+    "tesseract.js": "^2.1.1",
+    "tesseract.js-core": "^2.2.0"
   },
-  "homepage": "./",
-  "main": "public/electron.js",
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ],
   "devDependencies": {
+    "copy-webpack-plugin": "^6.0.1",
     "@rescripts/cli": "^0.0.14",
     "@rescripts/rescript-env": "^0.0.12",
     "babel-eslint": "10.1.0",
