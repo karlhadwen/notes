@@ -24,6 +24,7 @@ function groupBy(objectArray, property) {
   }, []);
 }
 
+// new worker config
 const worker = createWorker({
   cacheMethod: 'none',
   workerBlobURL: false,
