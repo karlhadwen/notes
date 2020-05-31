@@ -26,9 +26,10 @@ function groupBy(objectArray, property) {
 
 const worker = createWorker({
   cacheMethod: 'none',
-  langPath: `http://localhost:3000/static/vendor/lang-data/eng.traineddata`,
-  workerPath: `http://localhost:3000/static/vendor/worker.min.js`,
-  corePath: `http://localhost:3000/static/vendor/tesseract-core.wasm.js`,
+  workerBlobURL: false,
+  langPath: `/static/vendor/lang-data/`,
+  workerPath: `/static/vendor/worker.min.js`,
+  corePath: `/static/vendor/tesseract-core.wasm.js`,
   logger: (m) => console.log(m),
 });
 
